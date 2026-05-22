@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You Have Been Selected — Good Luck, Have Fun, Trust No One</title>
+<meta name="description" content="One night. One theory each. Tinfoil hats encouraged. Defend the indefensible — Bigfoot, chemtrails, Nessie — and the most convincing conspiracy theorist wins a very real prize." />
+
+<!-- ===========================================================
+     RSVP ENDPOINT — leave empty for the built-in demo confirmation.
+     To collect real RSVPs, paste a Formspree (or similar) URL below
+     in the <script> config: const RSVP_ENDPOINT = "https://...";
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --cyan:#19b5d6;
+    --cyan-deep:#129a0bd;
+    --red:#e83a2b;
+    --red-dark:#a81d12;
+    --red-deeper:#6f1209;
+    --ink:#0e2730;
+    --ink-soft:#3c5b64;
+    --paper:#fff8ea;
+    --yellow:#ffd23f;
+    --display:'Anton', sans-serif;
+    --body:'Archivo', system-ui, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--ink);
+    font-family:var(--body); font-size:1.18rem; line-height:1.6;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background-color:var(--cyan);
+    background-image:radial-gradient(rgba(255,255,255,.12) 1.5px, transparent 1.5px);
+    background-size:26px 26px;
+  }
+
+  ::selection{ background:var(--red); color:#fff; }
+  a{ color:var(--red); }
+
+  .wrap{ width:min(820px, 92vw); margin-inline:auto; position:relative; z-index:2; }
+
+  /* ---------- 3D extruded headline ---------- */
+  .threed{
+    font-family:var(--display); text-transform:uppercase; color:var(--red);
+    -webkit-text-stroke:2px var(--red-deeper);
+    text-shadow:
+      2px 2px 0 var(--red-dark), 3px 3px 0 var(--red-dark), 4px 4px 0 var(--red-dark),
+      5px 5px 0 var(--red-dark), 6px 6px 0 rgba(14,39,48,.35);
+    line-height:1; letter-spacing:.01em;
+  }
+
+  h2{ font-family:var(--display); text-transform:uppercase; font-size:clamp(2rem,5.6vw,3.2rem); line-height:1; margin:0 0 1.2rem; }
+  .kicker{ font-family:var(--body); font-weight:700; text-transform:uppercase; letter-spacing:.22em; font-size:.8rem; color:var(--red); margin:0 0 1rem; }
+  .prose{ max-width:54ch; margin:0 auto; color:var(--ink-soft); font-size:1.18rem; }
+  .prose.left{ text-align:left; }
+  .prose em{ color:var(--ink); font-style:normal; font-weight:700; }
+
+  section{ padding:5rem 0; position:relative; }
+  .center{ text-align:center; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:relative; z-index:3; text-align:center; padding:1rem;
+    font-family:var(--body); font-weight:700; text-transform:uppercase;
+    letter-spacing:.2em; font-size:.7rem; color:var(--ink);
+    background:var(--yellow); border-bottom:3px solid var(--ink);
+  }
+
+  /* ---------- buttons ---------- */
+  .actions{ margin-top:2.2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--display); text-transform:uppercase; letter-spacing:.05em; font-size:1.05rem;
+    cursor:pointer; padding:.7rem 1.8rem; color:#fff; background:var(--red);
+    border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--ink); }
+  .btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn.alt{ background:var(--paper); color:var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:96svh; display:flex; align-items:center; justify-content:center; text-align:center; padding:4rem 0; }
+  .emoji-row{ font-size:2.2rem; letter-spacing:.3em; margin-bottom:1.4rem; }
+  .emoji-row span{ display:inline-block; animation:bob 3s ease-in-out infinite; }
+  .emoji-row span:nth-child(2){ animation-delay:.4s; } .emoji-row span:nth-child(3){ animation-delay:.8s; }
+  .emoji-row span:nth-child(4){ animation-delay:1.2s; } .emoji-row span:nth-child(5){ animation-delay:1.6s; }
+  @keyframes bob{ 50%{ transform:translateY(-10px) rotate(-6deg); } }
+  .hero h1{ font-size:clamp(2.8rem, 11vw, 7rem); margin:0; }
+  .hero .tagline{ font-family:var(--display); text-transform:uppercase; color:var(--ink); font-size:clamp(1rem,3.2vw,1.6rem); margin:1.4rem 0 0; letter-spacing:.04em; }
+  .hero .lede{ max-width:52ch; margin:1.4rem auto 0; color:var(--ink); font-weight:500; font-size:1.18rem; }
+  .scrollcue{ margin-top:2.4rem; font-family:var(--display); text-transform:uppercase; letter-spacing:.1em; font-size:.9rem; color:var(--ink); animation:bob 2.6s ease-in-out infinite; }
+
+  /* ---------- card sections ---------- */
+  .card{
+    background:var(--paper); border:4px solid var(--ink); border-radius:18px;
+    box-shadow:10px 10px 0 rgba(14,39,48,.5); padding:clamp(2rem,5vw,3.2rem);
+    position:relative;
+  }
+  .tag{
+    position:absolute; top:-16px; left:50%; transform:translateX(-50%) rotate(-2deg);
+    background:var(--yellow); border:3px solid var(--ink); border-radius:999px;
+    padding:.3rem 1.2rem; font-family:var(--body); font-weight:700; text-transform:uppercase;
+    letter-spacing:.16em; font-size:.72rem; white-space:nowrap;
+  }
+
+  /* theory strip */
+  .theories{ display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-top:1.8rem; }
+  .theories .chip{
+    background:var(--cyan); color:var(--ink); border:2px solid var(--ink); border-radius:999px;
+    padding:.35rem .9rem; font-weight:600; font-size:.92rem;
+  }
+
+  /* ---------- rules ---------- */
+  .rules{ display:grid; grid-template-columns:repeat(2,1fr); gap:1.4rem; margin-top:1.8rem; }
+  @media (max-width:600px){ .rules{ grid-template-columns:1fr; } }
+  .rule-item{ background:#fff; border:3px solid var(--ink); border-radius:14px; padding:1.4rem; }
+  .rule-item .rn{ font-family:var(--display); font-size:2rem; color:var(--red); -webkit-text-stroke:1.5px var(--red-deeper); line-height:1; }
+  .rule-item h3{ font-family:var(--display); text-transform:uppercase; font-size:1.2rem; margin:.4rem 0 .5rem; color:var(--ink); letter-spacing:.02em; }
+  .rule-item p{ margin:0; color:var(--ink-soft); font-size:1.02rem; }
+  .closing{ text-align:center; margin-top:2rem; font-weight:700; font-size:1.2rem; color:var(--ink); }
+
+  /* ---------- particulars ---------- */
+  .ticket{ margin-top:1.6rem; }
+  .ticket .row{ display:flex; justify-content:space-between; align-items:baseline; gap:1rem; padding:1.2rem 0; border-bottom:2px dashed rgba(14,39,48,.25); text-align:left; }
+  .ticket .row:last-child{ border-bottom:none; }
+  .ticket .k{ font-family:var(--display); text-transform:uppercase; font-size:1.05rem; color:var(--red); }
+  .ticket .v{ font-weight:600; text-align:right; }
+  .ticket .v small{ display:block; font-weight:400; color:var(--ink-soft); font-size:.85rem; }
+
+  /* ---------- rsvp ---------- */
+  form{ margin-top:1.6rem; text-align:left; }
+  .field{ margin-bottom:1.4rem; }
+  .field label{ display:block; font-family:var(--body); font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:.78rem; color:var(--ink); margin-bottom:.4rem; }
+  .field input, .field select, .field textarea{
+    width:100%; background:#fff; border:3px solid var(--ink); border-radius:10px;
+    color:var(--ink); font-family:var(--body); font-size:1.05rem; padding:.7rem .8rem;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--red); }
+  .field textarea{ resize:vertical; min-height:74px; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
+  .form-actions{ text-align:center; margin-top:.6rem; }
+
+  .reserved{ display:none; text-align:center; padding:1rem 0; }
+  .reserved.show{ display:block; animation:pop .5s cubic-bezier(.2,1.5,.4,1) both; }
+  .reserved .seal{ font-family:var(--display); text-transform:uppercase; font-size:clamp(1.8rem,6vw,2.6rem); color:var(--red); -webkit-text-stroke:2px var(--red-deeper); }
+  .reserved p{ font-weight:600; margin-top:.8rem; }
+  @keyframes pop{ 0%{ transform:scale(.4) rotate(-8deg); opacity:0; } 100%{ transform:scale(1) rotate(0); opacity:1; } }
+
+  /* ---------- footer ---------- */
+  footer{ text-align:center; padding:3.5rem 1rem 4.5rem; position:relative; z-index:2; }
+  footer .big{ font-size:clamp(1.8rem,6vw,3rem); }
+  footer .tag2{ font-family:var(--body); font-weight:700; text-transform:uppercase; letter-spacing:.18em; font-size:.74rem; color:var(--ink); margin-top:1.2rem; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">Wake Up &#9733; Trust No One &#9733; The Truth Is Out There</div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="emoji-row reveal" aria-hidden="true"><span>&#128760;</span><span>&#128123;</span><span>&#128400;</span><span>&#9992;&#65039;</span><span>&#128009;</span></div>
+      <p class="kicker reveal">Submitted for the Believers</p>
+      <h1 class="threed reveal">You Have Been Selected</h1>
+      <p class="tagline reveal">Good Luck. Have Fun. Trust No One.</p>
+      <p class="lede reveal">
+        One night. One theory each — <em>tinfoil hats encouraged.</em> You'll be assigned a piece of forbidden
+        knowledge in advance and dared to make the room believe it. The most convincing conspiracy theorist
+        wins a (very real) prize.
+      </p>
+      <div class="theories reveal">
+        <span class="chip">&#128400; Bigfoot</span>
+        <span class="chip">&#9992;&#65039; Chemtrails</span>
+        <span class="chip">&#128009; Loch Ness</span>
+        <span class="chip">&#127765; Moon Landing</span>
+        <span class="chip">&#128062; Birds Aren't Real</span>
+      </div>
+      <div class="actions reveal">
+        <a class="btn" href="#rsvp">I'm In &#128760;</a>
+        <a class="btn alt" href="#rules">The Rules</a>
+      </div>
+      <div class="scrollcue reveal">Scroll, Sheeple &#9662;</div>
+    </div>
+  </header>
+
+  <!-- ===================== PREMISE ===================== -->
+  <section id="premise">
+    <div class="wrap">
+      <div class="card center reveal">
+        <span class="tag">Classified-ish</span>
+        <p class="kicker">The Premise</p>
+        <h2 class="threed">What Is This?!</h2>
+        <div class="prose left">
+          <p>
+            Part dinner party, part debate club, part group delusion. Everyone shows up clutching one absurd
+            theory — handed out in advance — and has to defend it with a totally straight face.
+          </p>
+          <p>
+            You might believe it. You might think it's <em>completely unhinged.</em> Doesn't matter. Tonight the
+            only job is to make the whole room nod along.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RULES ===================== -->
+  <!-- ===== EDIT THE TIME LIMIT IN RULE III BELOW ===== -->
+  <section id="rules">
+    <div class="wrap">
+      <div class="card center reveal">
+        <span class="tag">The Sacred Rules</span>
+        <p class="kicker">How It Works</p>
+        <h2 class="threed">The Rules</h2>
+        <div class="rules">
+          <div class="rule-item">
+            <div class="rn">1</div>
+            <h3>Theory Drops Early</h3>
+            <p>We send your assignment ahead of time. Memorize it, rehearse it, mutter it to your houseplants. Preparation is everything.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rn">2</div>
+            <h3>Any Medium Goes</h3>
+            <p>Slides, video, props, interpretive dance, suspiciously official charts — bring whatever sells the lie. Showmanship wins.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rn">3</div>
+            <h3>Beat the Clock</h3>
+            <p>You get a strict <strong>&#10216; X &#10217; minutes</strong>. Not a second more. Make every one of them ridiculous and convincing.</p>
+          </div>
+          <div class="rule-item">
+            <div class="rn">4</div>
+            <h3>The People Decide</h3>
+            <p>Everyone votes for the most convincing mastermind. Winner takes the prize. Everyone else gets a free alibi.</p>
+          </div>
+        </div>
+        <p class="closing">Come ready to commit to the bit. &#128760;</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PARTICULARS ===================== -->
+  <!-- ===== EDIT THE EVENT DETAILS IN THE THREE ROWS BELOW ===== -->
+  <section id="particulars">
+    <div class="wrap">
+      <div class="card center reveal">
+        <span class="tag">The Coordinates</span>
+        <p class="kicker">The Particulars</p>
+        <h2 class="threed">When &amp; Where</h2>
+        <div class="ticket">
+          <div class="row">
+            <span class="k">The Date</span>
+            <span class="v">&#10216; Date — TBD &#10217;<small>Time revealed upon RSVP.</small></span>
+          </div>
+          <div class="row">
+            <span class="k">The Bunker</span>
+            <span class="v">&#10216; Location &#10217;<small>Coordinates for cleared believers only.</small></span>
+          </div>
+          <div class="row">
+            <span class="k">The Dress</span>
+            <span class="v">Tinfoil Optional<small>Costumes wildly encouraged.</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp">
+    <div class="wrap">
+      <div class="card center reveal">
+        <span class="tag">Prove You're Real</span>
+        <p class="kicker">Kindly Respond</p>
+        <h2 class="threed">You In?</h2>
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="name">Your Name (or Alias)</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="attending">You Coming?</label>
+              <select id="attending" name="attending" required>
+                <option value="" disabled selected>Choose&hellip;</option>
+                <option value="yes">I'm in. Obviously.</option>
+                <option value="maybe">Pending surveillance.</option>
+                <option value="no">I was never here.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">Fellow Believers</label>
+              <input id="guests" name="guests" type="number" min="1" max="4" value="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="diet">Snack Intel (Dietary)</label>
+            <input id="diet" name="diet" type="text" placeholder="Allergies, preferences, classified cravings" />
+          </div>
+          <div class="field">
+            <label for="msg">Message to HQ (Optional)</label>
+            <textarea id="msg" name="msg" placeholder="Theories you're already cooking up&hellip;"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Transmit &#128225;</button>
+          </div>
+        </form>
+
+        <div class="reserved" id="reserved">
+          <div class="seal">You're In!</div>
+          <p>The truth awaits. Tell no one. &#128760;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="threed big">&#10216; Event Name &#10217;</div>
+    <div class="tag2">Good Luck &#9733; Have Fun &#9733; Trust No One</div>
+  </footer>
+
+<script>
+  // ---- CONFIG: paste a Formspree (or similar) URL to collect real RSVPs ----
+  const RSVP_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- staggered scroll reveal ----
+  (function(){
+    const items = document.querySelectorAll(".reveal");
+    if (reduceMotion){ items.forEach(i => i.classList.add("in")); return; }
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains("reveal"));
+          const idx = Math.max(0, sibs.indexOf(e.target));
+          e.target.style.transitionDelay = (idx * 90) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // ---- RSVP submit ----
+  (function(){
+    const form = document.getElementById("rsvpForm");
+    const reserved = document.getElementById("reserved");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const name = document.getElementById("name");
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--red)"; return; }
+
+      const done = function(){
+        form.style.display = "none";
+        reserved.classList.add("show");
+        reserved.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      };
+
+      if (RSVP_ENDPOINT){
+        try{
+          const res = await fetch(RSVP_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form)
+          });
+          res.ok ? done() : alert("Transmission failed. Try again or contact HQ directly.");
+        }catch(err){
+          alert("Transmission failed. Check your connection and try again.");
+        }
+      } else {
+        done(); // demo mode — no endpoint configured
+      }
+    });
+  })();
+</script>
+</body>
+</html>

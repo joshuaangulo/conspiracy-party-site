@@ -16,6 +16,7 @@ v3-red-velvet/index.html    ← Version 3 — "Red Velvet & Gold" (opulent gala,
 v4-wes-anderson/index.html  ← Version 4 — "Wes Anderson" (symmetrical, color-blocked, Futura)
 v5-knives-out/index.html    ← Version 5 — "Knives Out" (warm manor palette, yellow serif title)
 v6-victorian/index.html     ← Version 6 — "Victorian" (light, ivory + black, blackletter, elegant)
+v7-absurd/index.html        ← Version 7 — "Absurd" (cyan + red 3D type, cryptids, maximalist fun)
 ```
 
 ## View it locally
@@ -48,6 +49,7 @@ const RSVP_ENDPOINT = "https://formspree.io/f/xxxxxxx";
 - **v4 — Wes Anderson:** Jost (Futura-style geometric caps) + Lora; symmetrical, color-blocked panels in muted Knives-Out pastels (hunter green, oxblood, mustard, dusty rose, cream); chapter cards (I–IV), thin double-line frames, crossed-knives crest, deadpan-whimsical copy.
 - **v5 — Knives Out:** Yeseva One (warm display serif, closest free stand-in for the title's Windsor-style face) + EB Garamond; warm mahogany manor palette with a golden-yellow serif title and oxblood accents, gold-diamond dividers, whodunnit copy. Modeled on the Knives Out movie poster. (Earlier "Sleuthed"/Abril Fatface version replaced.)
 - **v6 — Victorian:** UnifrakturMaguntia (blackletter, in black) + EB Garamond; light ivory paper, black ink, a delicate double-rule page border, drop cap, fleuron (❦) dividers, generous whitespace. Gothic but light — elegant, classic, engraved-invitation simple.
+- **v7 — Absurd:** Anton (red 3D-extruded headlines via stacked text-shadows + text-stroke) + Archivo; vivid cyan dotted background, sticker-style cards with hard offset shadows, a yellow accent, floating cryptid emoji, and gleefully over-the-top copy (Bigfoot, chemtrails, Nessie, tinfoil hats). Maximalist and fun — modeled on a chunky-red-on-cyan conspiracy poster.
 - All: responsive, `prefers-reduced-motion` fallback, demo-mode RSVP.
 
 ## History
