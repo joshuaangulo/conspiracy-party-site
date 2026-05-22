@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You Have Been Selected — A Most Curious Affair</title>
+<meta name="description" content="A most curious affair. You are assigned a single theory in advance and invited to persuade the room. The most convincing sleuth wins a genuinely valuable prize." />
+
+<!-- ===========================================================
+     RSVP ENDPOINT — leave empty for the built-in demo confirmation.
+     To collect real RSVPs, paste a Formspree (or similar) URL below
+     in the <script> config: const RSVP_ENDPOINT = "https://...";
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --brown:#2a211a;
+    --brown-2:#221a14;
+    --brown-deep:#150e09;
+    --gold:#c8924f;
+    --gold-bright:#e2b274;
+    --gold-deep:#9c6e35;
+    --cream:#ece0c8;
+    --cream-dim:#b4a587;
+    --cream-faint:#7e735c;
+    --hair:rgba(200,146,79,0.30);
+    --hair-soft:rgba(200,146,79,0.16);
+    --display:'Abril Fatface', Georgia, serif;
+    --body:'EB Garamond', Georgia, 'Times New Roman', serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--cream);
+    font-family:var(--body); font-size:1.24rem; line-height:1.72;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(125% 95% at 50% 18%, #352a20 0%, var(--brown) 45%, var(--brown-deep) 100%);
+    background-attachment:fixed;
+  }
+  /* soft grain */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.05; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(130% 100% at 50% 30%, transparent 42%, rgba(0,0,0,.6) 100%);
+  }
+
+  ::selection{ background:var(--gold); color:var(--brown-deep); }
+  a{ color:var(--gold-bright); text-decoration:none; }
+
+  .wrap{ width:min(840px, 92vw); margin-inline:auto; text-align:center; position:relative; z-index:2; }
+
+  .emblem{ width:54px; height:54px; color:var(--gold); display:inline-block; }
+
+  /* ---------- type ---------- */
+  .kicker{
+    font-family:var(--body); font-variant:small-caps; font-weight:600;
+    letter-spacing:.32em; font-size:.84rem; color:var(--gold); margin:0 0 1.2rem;
+  }
+  h1{ font-family:var(--display); font-weight:400; line-height:1.04; margin:0; color:var(--gold-bright); }
+  h2{ font-family:var(--display); font-weight:400; font-size:clamp(2.1rem,5.4vw,3.4rem); line-height:1.06; margin:0 0 1.4rem; color:var(--gold-bright); }
+  .prose{ max-width:56ch; margin:0 auto; color:var(--cream-dim); font-size:1.26rem; }
+  .prose.left{ text-align:left; }
+  .prose em{ color:var(--cream); font-style:italic; }
+  .rule{ width:56px; height:2px; background:var(--gold); margin:1.4rem auto; opacity:.85; }
+
+  section{ padding:6rem 0; position:relative; }
+  .divider{ display:flex; align-items:center; justify-content:center; gap:1.2rem; padding:2.8rem 0; color:var(--gold); }
+  .divider span{ width:60px; height:1px; background:var(--hair); }
+  .divider .m{ font-size:.85rem; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:relative; z-index:3; display:flex; justify-content:center; gap:1.2em;
+    padding:1.5rem; font-family:var(--body); font-variant:small-caps;
+    letter-spacing:.3em; font-size:.74rem; color:var(--cream-faint);
+  }
+  .topbar .d{ color:var(--gold); }
+
+  /* ---------- buttons ---------- */
+  .actions{ margin-top:2.6rem; display:flex; gap:1.1rem; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--body); font-variant:small-caps; font-weight:600;
+    letter-spacing:.14em; font-size:1rem; cursor:pointer;
+    padding:.82rem 2rem; border:1px solid var(--gold);
+    background:var(--gold); color:var(--brown-deep);
+    transition:transform .18s ease, background .25s ease, color .25s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); background:var(--gold-bright); border-color:var(--gold-bright); }
+  .btn.ghost{ background:transparent; color:var(--gold-bright); }
+  .btn.ghost:hover{ background:rgba(200,146,79,.12); color:var(--gold-bright); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:96svh; display:flex; align-items:center; justify-content:center; position:relative; }
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(42% 36% at 50% 42%, rgba(200,146,79,.14), transparent 72%);
+  }
+  .hero .emblem{ margin-bottom:1.4rem; }
+  .hero h1{ font-size:clamp(2.8rem, 9vw, 6.4rem); }
+  .hero .sub{ font-family:var(--body); font-style:italic; font-size:1.4rem; color:var(--cream); margin:1.3rem auto 0; }
+  .hero .lede{ max-width:50ch; margin:1.5rem auto 0; color:var(--cream-dim); font-size:1.2rem; }
+  .scrollcue{ margin-top:2.8rem; font-family:var(--body); font-variant:small-caps; letter-spacing:.3em; font-size:.74rem; color:var(--cream-faint); animation:bob 3s ease-in-out infinite; }
+  @keyframes bob{ 50%{ transform:translateY(6px); opacity:.6; } }
+
+  /* ---------- rules ---------- */
+  .rules{ max-width:640px; margin:1rem auto 0; }
+  .rules .item{ padding:2.1rem 0; border-bottom:1px solid var(--hair-soft); text-align:center; }
+  .rules .item:first-child{ border-top:1px solid var(--hair-soft); }
+  .rules .rn{ font-family:var(--display); font-size:2.4rem; color:var(--gold); line-height:1; display:block; margin-bottom:.4rem; }
+  .rules h3{ font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.1em; font-size:1.14rem; color:var(--cream); margin:0 0 .5rem; }
+  .rules p{ margin:0 auto; max-width:46ch; color:var(--cream-dim); font-size:1.12rem; }
+  .closing{ text-align:center; margin-top:2.4rem; font-style:italic; color:var(--cream); font-size:1.34rem; }
+
+  /* ---------- particulars ---------- */
+  .ticket{ max-width:520px; margin:2.4rem auto 0; }
+  .ticket .row{ padding:1.7rem 0; }
+  .ticket .row + .row{ border-top:1px solid var(--hair-soft); }
+  .ticket .k{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.78rem; color:var(--gold); }
+  .ticket .v{ font-family:var(--display); font-size:clamp(1.4rem,3.6vw,2rem); color:var(--cream); margin-top:.5rem; line-height:1.15; }
+  .ticket .note{ display:block; font-style:italic; font-size:1rem; color:var(--cream-faint); margin-top:.5rem; }
+
+  /* ---------- rsvp ---------- */
+  .frame{ max-width:600px; margin:2.4rem auto 0; position:relative; border:1px solid var(--hair); padding:clamp(1.8rem,5vw,3rem); background:rgba(21,14,9,.4); }
+  .frame::before{ content:""; position:absolute; inset:6px; border:1px solid var(--hair-soft); pointer-events:none; }
+  form{ position:relative; z-index:2; text-align:left; }
+  .field{ margin-bottom:1.7rem; }
+  .field label{ display:block; font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.14em; font-size:.84rem; color:var(--gold); margin-bottom:.45rem; }
+  .field input, .field select, .field textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--hair-soft);
+    color:var(--cream); font-family:var(--body); font-size:1.2rem; padding:.5rem .1rem;
+    transition:border-color .25s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--cream-faint); font-style:italic; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--gold); }
+  .field select{ cursor:pointer; }
+  .field select option{ background:var(--brown-deep); color:var(--cream); }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+  @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
+  .form-actions{ text-align:center; margin-top:1rem; }
+
+  .reserved{ display:none; text-align:center; padding:1rem 0; }
+  .reserved.show{ display:block; animation:fade 1s ease both; }
+  .reserved .seal{ font-family:var(--display); font-size:clamp(1.8rem,5.5vw,2.8rem); color:var(--gold-bright); }
+  .reserved p{ font-style:italic; color:var(--cream-dim); margin-top:1rem; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none; } }
+
+  /* ---------- footer ---------- */
+  footer{ text-align:center; padding:3rem 0 4.5rem; position:relative; z-index:2; }
+  footer .emblem{ margin-bottom:1rem; width:40px; height:40px; }
+  footer .name{ font-family:var(--display); font-size:1.8rem; color:var(--gold-bright); }
+  footer .tag{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.74rem; color:var(--cream-faint); margin-top:.8rem; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span>By Invitation Only</span><span class="d">&#9670;</span><span>Trust No One</span>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="wrap">
+      <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+          <circle cx="42" cy="42" r="25"/><line x1="60" y1="60" x2="84" y2="84"/>
+        </g>
+      </svg>
+      <p class="kicker reveal">A Most Curious Affair</p>
+      <h1 class="reveal">You Have Been Selected</h1>
+      <p class="sub reveal">The game, dear guest, is afoot.</p>
+      <p class="lede reveal">
+        You will be entrusted, in advance, with a single theory — and one charge: persuade the room it is true.
+        By any means; with all the cunning you can summon. The most convincing sleuth wins a genuinely valuable
+        prize. Believe it, or not.
+      </p>
+      <div class="actions reveal">
+        <a class="btn" href="#rsvp">Reply at Once</a>
+        <a class="btn ghost" href="#rules">The Rules</a>
+      </div>
+      <div class="scrollcue reveal">investigate &#9662;</div>
+    </div>
+  </header>
+
+  <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
+
+  <!-- ===================== PREMISE ===================== -->
+  <section id="premise">
+    <div class="wrap">
+      <p class="kicker reveal">The Premise</p>
+      <h2 class="reveal">A Game of Belief</h2>
+      <div class="rule reveal"></div>
+      <div class="prose left reveal">
+        <p>
+          Equal parts dinner party and parlour mystery. Each guest arrives holding a single theory — assigned in
+          advance — to defend before the assembled company.
+        </p>
+        <p>
+          You may believe it completely. You may find it <em>perfectly preposterous.</em> It makes no difference.
+          Tonight there is but one question worth asking, and one mind clever enough to make us believe the answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
+
+  <!-- ===================== RULES ===================== -->
+  <!-- ===== EDIT THE TIME LIMIT IN RULE III BELOW ===== -->
+  <section id="rules">
+    <div class="wrap">
+      <p class="kicker reveal">The Rules of the Game</p>
+      <h2 class="reveal">How the Evening Unfolds</h2>
+
+      <div class="rules">
+        <div class="item reveal">
+          <span class="rn">I.</span>
+          <h3>Your Theory Arrives Early</h3>
+          <p>Your assignment is delivered well in advance. Study it. Live with it. Come prepared — this is no game for the unrehearsed.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">II.</span>
+          <h3>Any Medium You Can Master</h3>
+          <p>Slides, film, song, props, exhibits of dubious provenance — present however you please. Craftsmanship will be noticed.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">III.</span>
+          <h3>Mind the Clock</h3>
+          <p>Each presentation is permitted exactly <strong>&#10216; X &#10217; minutes</strong>. The clock is impartial, and unkind.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">IV.</span>
+          <h3>The Company Decides</h3>
+          <p>When all have spoken, a vote is taken. The most convincing mind wins the prize. The rest receive our sincere admiration.</p>
+        </div>
+      </div>
+
+      <p class="closing reveal">Come prepared. The most convincing case always carries the room.</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
+
+  <!-- ===================== PARTICULARS ===================== -->
+  <!-- ===== EDIT THE EVENT DETAILS IN THE THREE ROWS BELOW ===== -->
+  <section id="particulars">
+    <div class="wrap">
+      <p class="kicker reveal">The Particulars</p>
+      <h2 class="reveal">The When &amp; Where</h2>
+      <div class="rule reveal"></div>
+
+      <div class="ticket reveal">
+        <div class="row">
+          <div class="k">The Date</div>
+          <div class="v">&#10216; Date — to be revealed &#10217;</div>
+          <span class="note">The hour disclosed upon your reply.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Place</div>
+          <div class="v">&#10216; Location &#10217;</div>
+          <span class="note">Address shared only with confirmed guests.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Dress</div>
+          <div class="v">Elegant, with a Hint of Suspicion</div>
+          <span class="note">Come as someone with something to hide.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp">
+    <div class="wrap">
+      <p class="kicker reveal">Kindly Respond</p>
+      <h2 class="reveal">Will You Join Us?</h2>
+      <div class="rule reveal"></div>
+      <p class="prose reveal">A reply is requested. Discretion is assumed.</p>
+
+      <div class="frame reveal">
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="attending">Your Reply</label>
+              <select id="attending" name="attending" required>
+                <option value="" disabled selected>Select&hellip;</option>
+                <option value="yes">I shall attend.</option>
+                <option value="maybe">I am considering it.</option>
+                <option value="no">Regretfully, no.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">In Your Party</label>
+              <input id="guests" name="guests" type="number" min="1" max="4" value="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="diet">Dietary Notes</label>
+            <input id="diet" name="diet" type="text" placeholder="Allergies, preferences, or none at all" />
+          </div>
+          <div class="field">
+            <label for="msg">A Word to the Host (Optional)</label>
+            <textarea id="msg" name="msg" placeholder="Should there be anything we ought to know&hellip;"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Send My Reply</button>
+          </div>
+        </form>
+
+        <div class="reserved" id="reserved">
+          <div class="seal">Your Seat Is Reserved</div>
+          <p>Await further word. Tell no one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
+
+  <footer>
+    <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+        <circle cx="42" cy="42" r="25"/><line x1="60" y1="60" x2="84" y2="84"/>
+      </g>
+    </svg>
+    <div class="name">&#10216; Event Name &#10217;</div>
+    <div class="tag">By Invitation Only &nbsp;&#9670;&nbsp; Trust No One</div>
+  </footer>
+
+<script>
+  // ---- CONFIG: paste a Formspree (or similar) URL to collect real RSVPs ----
+  const RSVP_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- staggered scroll reveal ----
+  (function(){
+    const items = document.querySelectorAll(".reveal");
+    if (reduceMotion){ items.forEach(i => i.classList.add("in")); return; }
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains("reveal"));
+          const idx = Math.max(0, sibs.indexOf(e.target));
+          e.target.style.transitionDelay = (idx * 110) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // ---- RSVP submit ----
+  (function(){
+    const form = document.getElementById("rsvpForm");
+    const reserved = document.getElementById("reserved");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const name = document.getElementById("name");
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--gold)"; return; }
+
+      const done = function(){
+        form.style.display = "none";
+        reserved.classList.add("show");
+        reserved.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      };
+
+      if (RSVP_ENDPOINT){
+        try{
+          const res = await fetch(RSVP_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form)
+          });
+          res.ok ? done() : alert("Your reply could not be sent. Please try again or contact the host directly.");
+        }catch(err){
+          alert("Your reply could not be sent. Check your connection and try again.");
+        }
+      } else {
+        done(); // demo mode — no endpoint configured
+      }
+    });
+  })();
+</script>
+</body>
+</html>
