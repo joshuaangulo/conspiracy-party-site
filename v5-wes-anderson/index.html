@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You Are Cordially Suspected — An Evening in Four Chapters</title>
+<meta name="description" content="A meticulously suspicious soirée. You are assigned one theory, in advance, and asked to persuade the room. The most convincing guest wins a valuable prize." />
+
+<!-- ===========================================================
+     RSVP ENDPOINT — leave empty for the built-in demo confirmation.
+     To collect real RSVPs, paste a Formspree (or similar) URL below
+     in the <script> config: const RSVP_ENDPOINT = "https://...";
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --cream:#f2e8cf;
+    --cream-2:#ece0c0;
+    --green:#3a574a;
+    --rose:#e0a99b;
+    --rose-ink:#4d2a22;
+    --mustard:#e7cd8f;
+    --mustard-ink:#4a3818;
+    --oxblood:#8a3a2c;
+    --oxblood-deep:#6f2e23;
+    --ink:#33291f;
+    --ink-soft:#6b5e4d;
+    --display:'Jost', 'Century Gothic', sans-serif;
+    --body:'Lora', Georgia, 'Times New Roman', serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--ink); background:var(--cream);
+    font-family:var(--body); font-size:1.2rem; line-height:1.7;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--oxblood); color:var(--cream); }
+  a{ color:inherit; }
+
+  /* ---------- panels (color blocking) ---------- */
+  .panel{ padding:6rem 1.5rem; position:relative; }
+  .p-green   { background:var(--green);   color:var(--cream); --accent:var(--mustard); --frame:rgba(242,232,207,.42); }
+  .p-cream   { background:var(--cream);   color:var(--ink);   --accent:var(--oxblood); --frame:rgba(51,41,31,.28); }
+  .p-rose    { background:var(--rose);    color:var(--rose-ink); --accent:var(--oxblood); --frame:rgba(77,42,34,.34); }
+  .p-mustard { background:var(--mustard); color:var(--mustard-ink); --accent:var(--oxblood); --frame:rgba(74,56,24,.36); }
+  .p-oxblood { background:var(--oxblood); color:var(--cream); --accent:var(--mustard); --frame:rgba(242,232,207,.42); }
+
+  .wrap{ width:min(820px, 92vw); margin-inline:auto; text-align:center; position:relative; z-index:2; }
+
+  /* ---------- emblem ---------- */
+  .emblem{ width:56px; height:56px; color:var(--accent); display:inline-block; }
+
+  /* ---------- type ---------- */
+  .chapter{
+    font-family:var(--display); font-weight:600; text-transform:uppercase;
+    letter-spacing:.42em; font-size:.74rem; color:var(--accent); margin:0 0 1.2rem;
+  }
+  h1{
+    font-family:var(--display); font-weight:700; text-transform:uppercase;
+    letter-spacing:.06em; line-height:1.04; margin:0;
+    font-size:clamp(2.3rem, 6.4vw, 4.2rem);
+  }
+  h2{
+    font-family:var(--display); font-weight:600; text-transform:uppercase;
+    letter-spacing:.14em; line-height:1.1; margin:0 0 1.6rem;
+    font-size:clamp(1.7rem, 4.4vw, 2.6rem);
+  }
+  .prose{ max-width:54ch; margin:1.6rem auto 0; font-size:1.24rem; }
+  .prose.left{ text-align:left; }
+  .prose em{ font-style:italic; }
+  .sub{ font-family:var(--body); font-style:italic; font-size:1.3rem; margin:1.4rem auto 0; max-width:48ch; opacity:.92; }
+
+  /* ---------- frame device ---------- */
+  .framed{ position:relative; border:1px solid var(--frame); padding:clamp(2rem,5vw,3.4rem); }
+  .framed::before{ content:""; position:absolute; inset:6px; border:1px solid var(--frame); pointer-events:none; }
+  .rule{ width:54px; height:2px; background:var(--accent); margin:1.6rem auto; opacity:.85; }
+
+  /* ---------- buttons ---------- */
+  .actions{ margin-top:2.4rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--display); font-weight:600; text-transform:uppercase;
+    letter-spacing:.16em; font-size:.82rem; cursor:pointer;
+    padding:.85rem 1.9rem; border:1px solid var(--accent);
+    background:var(--accent); color:var(--green);
+    transition:transform .18s ease, opacity .2s ease;
+  }
+  .p-cream .btn, .p-rose .btn, .p-mustard .btn{ color:var(--cream); }
+  .btn:hover{ transform:translateY(-2px); opacity:.92; }
+  .btn.ghost{ background:transparent; color:inherit; }
+  .btn.ghost:hover{ transform:translateY(-2px); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:96svh; display:flex; align-items:center; justify-content:center; }
+  .hero .emblem{ margin-bottom:1.6rem; }
+  .hero .toplabel{
+    font-family:var(--display); font-weight:500; text-transform:uppercase;
+    letter-spacing:.4em; font-size:.72rem; color:var(--accent); margin:0 0 1.6rem;
+  }
+  .scrollcue{
+    margin-top:3rem; font-family:var(--display); font-weight:500; text-transform:uppercase;
+    letter-spacing:.3em; font-size:.66rem; opacity:.7; animation:bob 3s ease-in-out infinite;
+  }
+  @keyframes bob{ 50%{ transform:translateY(6px); opacity:.4; } }
+
+  /* ---------- rules grid (symmetry) ---------- */
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; max-width:760px; margin:2.6rem auto 0; }
+  @media (max-width:620px){ .cards{ grid-template-columns:1fr; } }
+  .rcard{ border:1px solid var(--frame); padding:1.9rem 1.5rem; text-align:center; background:rgba(255,255,255,.06); }
+  .rcard .rn{ font-family:var(--display); font-weight:700; font-size:1.7rem; color:var(--accent); line-height:1; }
+  .rcard h3{ font-family:var(--display); font-weight:600; text-transform:uppercase; letter-spacing:.1em; font-size:.92rem; margin:.8rem 0 .6rem; }
+  .rcard p{ margin:0; font-size:1.04rem; line-height:1.6; }
+  .closing{ margin-top:2.4rem; font-style:italic; font-size:1.28rem; }
+
+  /* ---------- particulars ticket ---------- */
+  .ticket{ max-width:520px; margin:2.6rem auto 0; }
+  .ticket .row{ padding:1.6rem 0; }
+  .ticket .row + .row{ border-top:1px solid var(--frame); }
+  .ticket .k{ font-family:var(--display); font-weight:600; text-transform:uppercase; letter-spacing:.26em; font-size:.74rem; color:var(--accent); }
+  .ticket .v{ font-family:var(--display); font-weight:500; font-size:clamp(1.2rem,3.4vw,1.6rem); margin-top:.5rem; }
+  .ticket .note{ display:block; font-style:italic; font-size:.98rem; opacity:.8; margin-top:.4rem; }
+
+  /* ---------- rsvp ---------- */
+  form{ max-width:560px; margin:2.6rem auto 0; text-align:left; }
+  .field{ margin-bottom:1.7rem; }
+  .field label{
+    display:block; font-family:var(--display); font-weight:600; text-transform:uppercase;
+    letter-spacing:.14em; font-size:.74rem; color:var(--accent); margin-bottom:.5rem;
+  }
+  .field input, .field select, .field textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--frame);
+    color:var(--ink); font-family:var(--body); font-size:1.18rem; padding:.5rem .1rem;
+    transition:border-color .25s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--ink-soft); font-style:italic; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--oxblood); }
+  .field select{ cursor:pointer; }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+  @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
+  .form-actions{ text-align:center; margin-top:1rem; }
+
+  .reserved{ display:none; text-align:center; padding:1rem 0; }
+  .reserved.show{ display:block; animation:fade 1s ease both; }
+  .reserved .seal{ font-family:var(--display); font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:clamp(1.5rem,5vw,2.2rem); color:var(--oxblood); }
+  .reserved p{ font-style:italic; margin-top:1rem; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none; } }
+
+  /* ---------- footer ---------- */
+  .foot .emblem{ margin-bottom:1.2rem; }
+  .foot .name{ font-family:var(--display); font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-size:1.4rem; }
+  .foot .tag{ font-family:var(--display); font-weight:500; text-transform:uppercase; letter-spacing:.28em; font-size:.72rem; margin-top:1rem; opacity:.85; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="panel p-green hero">
+    <div class="wrap">
+      <div class="framed reveal">
+        <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+          <g fill="currentColor">
+            <g transform="rotate(42 50 50)"><path d="M50 14 L46.5 52 L53.5 52 Z"/><rect x="43" y="52" width="14" height="4"/><rect x="47" y="56" width="6" height="26" rx="3"/></g>
+            <g transform="rotate(-42 50 50)"><path d="M50 14 L46.5 52 L53.5 52 Z"/><rect x="43" y="52" width="14" height="4"/><rect x="47" y="56" width="6" height="26" rx="3"/></g>
+          </g>
+        </svg>
+        <p class="toplabel">An Evening, in Four Chapters</p>
+        <h1>You Are Cordially Suspected</h1>
+        <p class="sub">A meticulously suspicious soirée, arranged with great care.</p>
+        <p class="prose">
+          You will be assigned one theory, in advance, and asked to defend it before the assembled company —
+          with conviction, charm, and the visual aids of your choosing. The most persuasive guest shall be
+          awarded a genuinely valuable prize. Punctuality is admired; honesty is optional.
+        </p>
+        <div class="actions">
+          <a class="btn" href="#rsvp">Reply at Once</a>
+          <a class="btn ghost" href="#rules">Peruse the Rules</a>
+        </div>
+      </div>
+      <div class="scrollcue">Chapter One &#9662;</div>
+    </div>
+  </header>
+
+  <!-- ===================== I — PREMISE ===================== -->
+  <section class="panel p-cream" id="premise">
+    <div class="wrap">
+      <p class="chapter reveal">Chapter One</p>
+      <h2 class="reveal">The Premise</h2>
+      <div class="rule reveal"></div>
+      <div class="prose left reveal">
+        <p>
+          A small assembly. One absurd theory apiece. A single, simple objective: persuade the room.
+          You may believe your theory wholeheartedly, or find it <em>entirely preposterous.</em>
+          The company cannot tell the difference — and that, dear guest, is rather the point.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== II — RULES ===================== -->
+  <!-- ===== EDIT THE TIME LIMIT IN RULE III BELOW ===== -->
+  <section class="panel p-rose" id="rules">
+    <div class="wrap">
+      <p class="chapter reveal">Chapter Two</p>
+      <h2 class="reveal">The Rules</h2>
+      <div class="rule reveal"></div>
+
+      <div class="cards">
+        <div class="rcard reveal">
+          <div class="rn">I.</div>
+          <h3>Your Theory, In Advance</h3>
+          <p>Your assignment arrives ahead of time. Study it thoroughly. A prepared, well-mannered argument is expected.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn">II.</div>
+          <h3>The Medium Is Yours</h3>
+          <p>Slides, film, song, props, exhibits of questionable authenticity — present however you please. Craftsmanship will be noticed.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn">III.</div>
+          <h3>A Strict Allowance of Time</h3>
+          <p>Each presentation is permitted exactly <strong>&#10216; X &#10217; minutes</strong>. The clock is impartial, and unkind.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn">IV.</div>
+          <h3>The Company Shall Decide</h3>
+          <p>When all have spoken, a vote is taken. The most convincing guest wins the prize. The remainder receive our sincere admiration.</p>
+        </div>
+      </div>
+
+      <p class="closing reveal">Come prepared. Showmanship is, after all, its own reward.</p>
+    </div>
+  </section>
+
+  <!-- ===================== III — PARTICULARS ===================== -->
+  <!-- ===== EDIT THE EVENT DETAILS IN THE THREE ROWS BELOW ===== -->
+  <section class="panel p-mustard" id="particulars">
+    <div class="wrap">
+      <p class="chapter reveal">Chapter Three</p>
+      <h2 class="reveal">The Particulars</h2>
+      <div class="rule reveal"></div>
+
+      <div class="ticket framed reveal">
+        <div class="row">
+          <div class="k">The Date</div>
+          <div class="v">&#10216; Date — to be revealed &#10217;</div>
+          <span class="note">The hour disclosed upon your reply.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Place</div>
+          <div class="v">&#10216; Location &#10217;</div>
+          <span class="note">Address shared only with confirmed guests.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Dress</div>
+          <div class="v">Elegant, with a Hint of Suspicion</div>
+          <span class="note">Come as someone with something to hide.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IV — RSVP ===================== -->
+  <section class="panel p-cream" id="rsvp">
+    <div class="wrap">
+      <p class="chapter reveal">Chapter Four</p>
+      <h2 class="reveal">Kindly Respond</h2>
+      <div class="rule reveal"></div>
+      <p class="prose reveal">A prompt reply is requested — and quietly judged.</p>
+
+      <div class="framed reveal">
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="attending">Your Reply</label>
+              <select id="attending" name="attending" required>
+                <option value="" disabled selected>Select&hellip;</option>
+                <option value="yes">I shall attend.</option>
+                <option value="maybe">I am considering it.</option>
+                <option value="no">Regretfully, no.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">In Your Party</label>
+              <input id="guests" name="guests" type="number" min="1" max="4" value="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="diet">Dietary Notes</label>
+            <input id="diet" name="diet" type="text" placeholder="Allergies, preferences, or none at all" />
+          </div>
+          <div class="field">
+            <label for="msg">A Word to the Host (Optional)</label>
+            <textarea id="msg" name="msg" placeholder="Should there be anything we ought to know&hellip;"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Send My Reply</button>
+          </div>
+        </form>
+
+        <div class="reserved" id="reserved">
+          <div class="seal">Your Seat Is Reserved</div>
+          <p>Await further word. Tell no one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="panel p-oxblood foot">
+    <div class="wrap">
+      <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
+        <g fill="currentColor">
+          <g transform="rotate(42 50 50)"><path d="M50 14 L46.5 52 L53.5 52 Z"/><rect x="43" y="52" width="14" height="4"/><rect x="47" y="56" width="6" height="26" rx="3"/></g>
+          <g transform="rotate(-42 50 50)"><path d="M50 14 L46.5 52 L53.5 52 Z"/><rect x="43" y="52" width="14" height="4"/><rect x="47" y="56" width="6" height="26" rx="3"/></g>
+        </g>
+      </svg>
+      <div class="name">&#10216; Event Name &#10217;</div>
+      <div class="tag">Arranged with Great Care &nbsp;&middot;&nbsp; Trust No One</div>
+    </div>
+  </footer>
+
+<script>
+  // ---- CONFIG: paste a Formspree (or similar) URL to collect real RSVPs ----
+  const RSVP_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- staggered scroll reveal ----
+  (function(){
+    const items = document.querySelectorAll(".reveal");
+    if (reduceMotion){ items.forEach(i => i.classList.add("in")); return; }
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains("reveal"));
+          const idx = Math.max(0, sibs.indexOf(e.target));
+          e.target.style.transitionDelay = (idx * 110) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // ---- RSVP submit ----
+  (function(){
+    const form = document.getElementById("rsvpForm");
+    const reserved = document.getElementById("reserved");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const name = document.getElementById("name");
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--oxblood)"; return; }
+
+      const done = function(){
+        form.style.display = "none";
+        reserved.classList.add("show");
+        reserved.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      };
+
+      if (RSVP_ENDPOINT){
+        try{
+          const res = await fetch(RSVP_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form)
+          });
+          res.ok ? done() : alert("Your reply could not be sent. Please try again or contact the host directly.");
+        }catch(err){
+          alert("Your reply could not be sent. Check your connection and try again.");
+        }
+      } else {
+        done(); // demo mode — no endpoint configured
+      }
+    });
+  })();
+</script>
+</body>
+</html>

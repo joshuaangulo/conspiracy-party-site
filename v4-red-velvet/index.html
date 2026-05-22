@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You Have Been Selected — A Red-Carpet Affair</title>
+<meta name="description" content="An opulent evening of theories, persuasion, and one very real prize. You're assigned a theory in advance and invited to make the room believe it." />
+
+<!-- ===========================================================
+     RSVP ENDPOINT — leave empty for the built-in demo confirmation.
+     To collect real RSVPs, paste a Formspree (or similar) URL below
+     in the <script> config: const RSVP_ENDPOINT = "https://...";
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --velvet:#5c0d11;
+    --velvet-dark:#380609;
+    --velvet-light:#7d1519;
+    --gold:#c8a24c;
+    --gold-bright:#ecd494;
+    --gold-deep:#9c7a2f;
+    --champagne:#f1e4c6;
+    --champagne-dim:#cdb88f;
+    --champagne-faint:#9c8862;
+    --hair:rgba(200,162,76,0.34);
+    --hair-soft:rgba(200,162,76,0.18);
+    --display:'Playfair Display', Georgia, serif;
+    --body:'EB Garamond', Georgia, 'Times New Roman', serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--champagne);
+    font-family:var(--body); font-size:1.24rem; line-height:1.72;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 10px),
+      radial-gradient(125% 95% at 50% 22%, var(--velvet-light) 0%, var(--velvet) 42%, var(--velvet-dark) 100%);
+    background-attachment:fixed;
+  }
+  /* soft grain */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.05; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection{ background:var(--gold); color:var(--velvet-dark); }
+  a{ color:var(--gold-bright); text-decoration:none; }
+
+  .wrap{ width:min(840px, 92vw); margin-inline:auto; text-align:center; position:relative; z-index:2; }
+
+  .goldtext{
+    background:linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 46%, var(--gold-deep) 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+  }
+
+  /* ---------- shared ---------- */
+  section{ padding:6rem 0; position:relative; }
+  .kicker{
+    font-family:var(--body); font-variant:small-caps; font-weight:600;
+    letter-spacing:.34em; font-size:.84rem; color:var(--gold); margin:0 0 1.3rem;
+  }
+  h2{ font-family:var(--display); font-weight:700; font-size:clamp(2.1rem, 5.4vw, 3.4rem); line-height:1.08; margin:0 0 1.4rem; }
+  .prose{ max-width:56ch; margin:0 auto; color:var(--champagne-dim); font-size:1.26rem; }
+  .prose.left{ text-align:left; }
+  .prose em{ color:var(--champagne); font-style:italic; }
+
+  .divider{ display:flex; align-items:center; justify-content:center; gap:1.4rem; padding:3rem 0; color:var(--gold); }
+  .divider span{ width:70px; height:1px; background:var(--hair); }
+  .divider .d{ font-size:1rem; }
+  .rule{ width:56px; height:2px; background:var(--gold); margin:1.4rem auto; opacity:.85; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:relative; z-index:3; display:flex; justify-content:center; gap:1.2em;
+    padding:1.5rem; font-family:var(--body); font-variant:small-caps;
+    letter-spacing:.3em; font-size:.72rem; color:var(--champagne-faint);
+  }
+  .topbar .d{ color:var(--gold); }
+
+  /* ---------- buttons ---------- */
+  .actions{ margin-top:2.6rem; display:flex; gap:1.1rem; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--body); font-variant:small-caps; font-weight:600;
+    letter-spacing:.16em; font-size:1rem; cursor:pointer;
+    padding:.82rem 2rem; border:1px solid var(--gold);
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold) 70%);
+    color:var(--velvet-dark);
+    transition:transform .18s ease, box-shadow .25s ease, filter .2s ease;
+    box-shadow:0 6px 22px rgba(0,0,0,.35);
+  }
+  .btn:hover{ transform:translateY(-2px); filter:brightness(1.06); box-shadow:0 10px 30px rgba(0,0,0,.45); }
+  .btn.ghost{ background:transparent; color:var(--gold-bright); box-shadow:none; }
+  .btn.ghost:hover{ background:rgba(200,162,76,.1); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:98svh; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+  .sunburst{
+    position:absolute; top:42%; left:50%; transform:translate(-50%,-50%);
+    width:170vmax; height:170vmax; z-index:0; pointer-events:none;
+    background:repeating-conic-gradient(from 0deg,
+      rgba(200,162,76,.20) 0deg 0.5deg, transparent 0.5deg 6deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 8%, #000 18%, #000 44%, transparent 72%);
+            mask:radial-gradient(closest-side, transparent 8%, #000 18%, #000 44%, transparent 72%);
+    animation:rotate 180s linear infinite;
+  }
+  @keyframes rotate{ to{ transform:translate(-50%,-50%) rotate(360deg); } }
+
+  .gframe{ position:relative; border:1px solid var(--hair); padding:clamp(2rem,5vw,3.6rem); background:rgba(40,5,7,.32); backdrop-filter:blur(1px); }
+  .gframe::before{ content:""; position:absolute; inset:6px; border:1px solid var(--hair-soft); pointer-events:none; }
+
+  .hero .toplabel{ font-family:var(--body); font-variant:small-caps; letter-spacing:.4em; font-size:.78rem; color:var(--gold); margin:0 0 1.4rem; }
+  .hero h1{ font-family:var(--display); font-weight:800; font-size:clamp(2.7rem, 8.5vw, 6rem); line-height:1.02; margin:0; }
+  .hero .sub{ font-family:var(--body); font-style:italic; font-size:1.34rem; color:var(--champagne); margin:1.4rem auto 0; max-width:46ch; }
+  .hero .lede{ max-width:52ch; margin:1.6rem auto 0; color:var(--champagne-dim); font-size:1.18rem; }
+  .scrollcue{ margin-top:2.8rem; font-family:var(--body); font-variant:small-caps; letter-spacing:.3em; font-size:.72rem; color:var(--champagne-faint); animation:bob 3s ease-in-out infinite; }
+  @keyframes bob{ 50%{ transform:translateY(6px); opacity:.6; } }
+
+  /* ---------- rules grid ---------- */
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; max-width:760px; margin:2.6rem auto 0; }
+  @media (max-width:620px){ .cards{ grid-template-columns:1fr; } }
+  .rcard{ position:relative; border:1px solid var(--hair-soft); padding:2rem 1.6rem; text-align:center; background:rgba(40,5,7,.28); }
+  .rcard .rn{ font-family:var(--display); font-weight:700; font-size:1.9rem; line-height:1; }
+  .rcard h3{ font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.1em; font-size:1.12rem; color:var(--champagne); margin:.7rem 0 .6rem; }
+  .rcard p{ margin:0; color:var(--champagne-dim); font-size:1.06rem; line-height:1.6; }
+  .closing{ margin-top:2.4rem; font-style:italic; font-size:1.32rem; color:var(--champagne); }
+
+  /* ---------- particulars ---------- */
+  .ticket{ max-width:520px; margin:2.6rem auto 0; }
+  .ticket .row{ padding:1.7rem 0; }
+  .ticket .row + .row{ border-top:1px solid var(--hair-soft); }
+  .ticket .k{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.78rem; color:var(--gold); }
+  .ticket .v{ font-family:var(--display); font-weight:600; font-size:clamp(1.4rem,3.6vw,1.9rem); margin-top:.5rem; }
+  .ticket .note{ display:block; font-style:italic; font-size:1rem; color:var(--champagne-faint); margin-top:.5rem; }
+
+  /* ---------- rsvp ---------- */
+  form{ max-width:560px; margin:2.6rem auto 0; text-align:left; }
+  .field{ margin-bottom:1.7rem; }
+  .field label{ display:block; font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.14em; font-size:.82rem; color:var(--gold); margin-bottom:.45rem; }
+  .field input, .field select, .field textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--hair-soft);
+    color:var(--champagne); font-family:var(--body); font-size:1.2rem; padding:.5rem .1rem;
+    transition:border-color .25s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--champagne-faint); font-style:italic; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--gold); }
+  .field select{ cursor:pointer; }
+  .field select option{ background:var(--velvet-dark); color:var(--champagne); }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+  @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
+  .form-actions{ text-align:center; margin-top:1rem; }
+
+  .reserved{ display:none; text-align:center; padding:1rem 0; }
+  .reserved.show{ display:block; animation:fade 1s ease both; }
+  .reserved .seal{ font-family:var(--display); font-weight:700; font-size:clamp(1.8rem,5.5vw,2.8rem); }
+  .reserved p{ font-style:italic; color:var(--champagne-dim); margin-top:1rem; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none; } }
+
+  /* ---------- footer ---------- */
+  footer{ text-align:center; padding:3rem 0 4.5rem; position:relative; z-index:2; }
+  footer .name{ font-family:var(--display); font-weight:700; font-size:1.7rem; }
+  footer .tag{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.74rem; color:var(--champagne-faint); margin-top:.9rem; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span>By Invitation Only</span><span class="d">&#9670;</span><span>Trust No One</span>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="sunburst" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="gframe reveal">
+        <p class="toplabel">A Red-Carpet Affair</p>
+        <h1 class="goldtext">You Have Been Selected</h1>
+        <p class="sub">An opulent evening of theories, persuasion &mdash; and one very real prize.</p>
+        <p class="lede">
+          Roll out the red carpet. You will be assigned a single theory in advance and invited to make the room
+          believe it &mdash; by any means, with all the flourish you can muster. The most convincing performance
+          wins a genuinely valuable prize. Dress to dazzle. Trust no one.
+        </p>
+        <div class="actions">
+          <a class="btn" href="#rsvp">Reply at Once</a>
+          <a class="btn ghost" href="#rules">Peruse the Rules</a>
+        </div>
+      </div>
+      <div class="scrollcue">descend &#9662;</div>
+    </div>
+  </header>
+
+  <div class="divider"><span></span><span class="d">&#9670;</span><span></span></div>
+
+  <!-- ===================== PREMISE ===================== -->
+  <section id="premise">
+    <div class="wrap">
+      <p class="kicker reveal">The Premise</p>
+      <h2 class="goldtext reveal">A Game of Belief</h2>
+      <div class="rule reveal"></div>
+      <div class="prose left reveal">
+        <p>
+          Equal parts dinner party, debate, and grand performance. Each guest arrives entrusted with a single
+          theory &mdash; assigned in advance &mdash; to defend before the assembled company.
+        </p>
+        <p>
+          You may believe it completely. You may find it <em>gloriously absurd.</em> It makes no difference.
+          Tonight there is one prize, one stage, and one question: who can make the whole room believe?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="d">&#9670;</span><span></span></div>
+
+  <!-- ===================== RULES ===================== -->
+  <!-- ===== EDIT THE TIME LIMIT IN RULE III BELOW ===== -->
+  <section id="rules">
+    <div class="wrap">
+      <p class="kicker reveal">The Rules of the Game</p>
+      <h2 class="goldtext reveal">How the Evening Unfolds</h2>
+      <div class="rule reveal"></div>
+
+      <div class="cards">
+        <div class="rcard reveal">
+          <div class="rn goldtext">I.</div>
+          <h3>Your Theory, In Advance</h3>
+          <p>Your assignment arrives ahead of time. Study it, rehearse it, perfect it. A prepared, polished case is expected.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn goldtext">II.</div>
+          <h3>Any Medium You Can Master</h3>
+          <p>Slides, film, music, props, exhibits of dubious origin &mdash; bring whatever makes your case dazzle. Showmanship is richly rewarded.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn goldtext">III.</div>
+          <h3>Mind the Clock</h3>
+          <p>Each presentation is permitted exactly <strong>&#10216; X &#10217; minutes</strong>. The clock is impartial, and unkind.</p>
+        </div>
+        <div class="rcard reveal">
+          <div class="rn goldtext">IV.</div>
+          <h3>The Assembly Decides</h3>
+          <p>When the curtain falls, the room votes for the most convincing mind. The winner claims the prize; the rest, our applause.</p>
+        </div>
+      </div>
+
+      <p class="closing reveal">Curtain up. Make it a spectacle.</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="d">&#9670;</span><span></span></div>
+
+  <!-- ===================== PARTICULARS ===================== -->
+  <!-- ===== EDIT THE EVENT DETAILS IN THE THREE ROWS BELOW ===== -->
+  <section id="particulars">
+    <div class="wrap">
+      <p class="kicker reveal">The Particulars</p>
+      <h2 class="goldtext reveal">The When &amp; Where</h2>
+      <div class="rule reveal"></div>
+
+      <div class="ticket gframe reveal">
+        <div class="row">
+          <div class="k">The Date</div>
+          <div class="v goldtext">&#10216; Date — to be revealed &#10217;</div>
+          <span class="note">The hour disclosed upon your reply.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Place</div>
+          <div class="v goldtext">&#10216; Location &#10217;</div>
+          <span class="note">Address shared only with confirmed guests.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Dress</div>
+          <div class="v goldtext">Black-Tie, Blood-Red Optional</div>
+          <span class="note">Come dressed to dazzle (and to deceive).</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="d">&#9670;</span><span></span></div>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp">
+    <div class="wrap">
+      <p class="kicker reveal">Kindly Respond</p>
+      <h2 class="goldtext reveal">Will You Join Us?</h2>
+      <div class="rule reveal"></div>
+      <p class="prose reveal">A reply is requested. Discretion is assumed.</p>
+
+      <div class="gframe reveal">
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="attending">Your Reply</label>
+              <select id="attending" name="attending" required>
+                <option value="" disabled selected>Select&hellip;</option>
+                <option value="yes">I shall attend.</option>
+                <option value="maybe">I am considering it.</option>
+                <option value="no">Regretfully, no.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">In Your Party</label>
+              <input id="guests" name="guests" type="number" min="1" max="4" value="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="diet">Dietary Notes</label>
+            <input id="diet" name="diet" type="text" placeholder="Allergies, preferences, or none at all" />
+          </div>
+          <div class="field">
+            <label for="msg">A Word to the Host (Optional)</label>
+            <textarea id="msg" name="msg" placeholder="Should there be anything we ought to know&hellip;"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Send My Reply</button>
+          </div>
+        </form>
+
+        <div class="reserved" id="reserved">
+          <div class="seal goldtext">Your Seat Is Reserved</div>
+          <p>Await further word. Tell no one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="d">&#9670;</span><span></span></div>
+
+  <footer>
+    <div class="name goldtext">&#10216; Event Name &#10217;</div>
+    <div class="tag">Roll Out the Red Carpet &nbsp;&#9670;&nbsp; Trust No One</div>
+  </footer>
+
+<script>
+  // ---- CONFIG: paste a Formspree (or similar) URL to collect real RSVPs ----
+  const RSVP_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- staggered scroll reveal ----
+  (function(){
+    const items = document.querySelectorAll(".reveal");
+    if (reduceMotion){ items.forEach(i => i.classList.add("in")); return; }
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains("reveal"));
+          const idx = Math.max(0, sibs.indexOf(e.target));
+          e.target.style.transitionDelay = (idx * 110) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // ---- RSVP submit ----
+  (function(){
+    const form = document.getElementById("rsvpForm");
+    const reserved = document.getElementById("reserved");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const name = document.getElementById("name");
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--gold)"; return; }
+
+      const done = function(){
+        form.style.display = "none";
+        reserved.classList.add("show");
+        reserved.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      };
+
+      if (RSVP_ENDPOINT){
+        try{
+          const res = await fetch(RSVP_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form)
+          });
+          res.ok ? done() : alert("Your reply could not be sent. Please try again or contact the host directly.");
+        }catch(err){
+          alert("Your reply could not be sent. Check your connection and try again.");
+        }
+      } else {
+        done(); // demo mode — no endpoint configured
+      }
+    });
+  })();
+</script>
+</body>
+</html>

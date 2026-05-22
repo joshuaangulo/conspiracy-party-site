@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Conspiracy Party — Site Versions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Jost:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+<style>
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100vh; background:#0a0a0b; color:#e8e3d8;
+    font-family:'Jost', system-ui, sans-serif;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:3rem 1.5rem; gap:3rem;
+  }
+  .head{ text-align:center; }
+  .head .kicker{ text-transform:uppercase; letter-spacing:.4em; font-size:.66rem; color:#9a9384; }
+  .head h1{ font-family:'Cormorant Garamond', serif; font-weight:400; font-size:clamp(2rem,6vw,3.2rem); margin:.6rem 0 0; }
+  .head p{ color:#8d8678; max-width:46ch; margin:.8rem auto 0; font-size:.95rem; line-height:1.6; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.6rem; width:min(900px,100%); }
+  .opt{
+    display:block; text-decoration:none; color:inherit;
+    border:1px solid rgba(232,227,216,.14); padding:2rem 1.8rem;
+    transition:border-color .3s ease, transform .3s ease, background .3s ease;
+  }
+  .opt:hover{ transform:translateY(-4px); }
+  .opt.v1:hover{ border-color:#c62a1c; background:rgba(198,42,28,.06); }
+  .opt.v2:hover{ border-color:#c4a86b; background:rgba(196,168,107,.06); }
+  .opt.v4:hover{ border-color:#c8a24c; background:rgba(124,18,20,.18); }
+  .opt.v5:hover{ border-color:#7f9c89; background:rgba(127,156,137,.08); }
+  .opt .v{ text-transform:uppercase; letter-spacing:.3em; font-size:.62rem; color:#9a9384; }
+  .opt h2{ font-family:'Cormorant Garamond', serif; font-weight:400; font-size:1.7rem; margin:.7rem 0 .5rem; }
+  .opt.v1 h2{ color:#e8b3aa; } .opt.v2 h2{ color:#dcc185; }
+  .opt.v4 h2{ color:#e6c878; font-family:'Playfair Display',serif; font-weight:700; }
+  .opt.v5 h2{ color:#e7cd8f; font-family:'Jost',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:1.5rem; }
+  .opt p{ color:#8d8678; font-size:.9rem; line-height:1.6; margin:0; }
+  .opt .go{ margin-top:1.2rem; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:#bdb6a6; }
+  .opt.soon{ opacity:.45; pointer-events:none; }
+  footer{ color:#5f594d; font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="kicker">Conspiracy Party</div>
+    <h1>Choose a Look</h1>
+    <p>Four design directions for the party site. Open each, compare, and pick the one that fits the night.</p>
+  </div>
+
+  <div class="grid">
+    <a class="opt v1" href="v1-dossier/index.html">
+      <div class="v">Version 1</div>
+      <h2>Declassified Dossier</h2>
+      <p>Grungy, paranoid, leaked-file energy. Black + aged paper, red CLASSIFIED stamps, redaction bars you tap to declassify.</p>
+      <div class="go">Open →</div>
+    </a>
+    <a class="opt v2" href="v2-glass-onion/index.html">
+      <div class="v">Version 2</div>
+      <h2>Glass Onion</h2>
+      <p>Minimal, mysterious, murder-mystery elegance. Near-black + ivory + antique gold, refined serif, a faint glass-onion ring motif.</p>
+      <div class="go">Open →</div>
+    </a>
+    <a class="opt v4" href="v4-red-velvet/index.html">
+      <div class="v">Version 4</div>
+      <h2>Red Velvet &amp; Gold</h2>
+      <p>Opulent red-carpet gala. Deep velvet crimson, metallic gold serif, a rotating knife-wheel sunburst, gilded frames — inspired by the Knives Out poster.</p>
+      <div class="go">Open →</div>
+    </a>
+    <a class="opt v5" href="v5-wes-anderson/index.html">
+      <div class="v">Version 5</div>
+      <h2>Wes Anderson</h2>
+      <p>Symmetrical, color-blocked, deadpan-whimsical. Muted Knives-Out pastels (green, oxblood, mustard, rose), Futura-style caps, chapter cards, crossed-knives crest.</p>
+      <div class="go">Open →</div>
+    </a>
+  </div>
+
+  <footer>Trust No One</footer>
+</body>
+</html>
