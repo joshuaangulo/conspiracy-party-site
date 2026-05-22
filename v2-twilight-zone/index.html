@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Conspiracy Zone — Submitted for Your Approval</title>
+<meta name="description" content="Submitted for your approval: a gathering where every guest holds a theory, and nothing is quite as it seems. The most convincing mind wins a very real prize." />
+
+<!-- ===========================================================
+     RSVP ENDPOINT — leave empty for the built-in demo confirmation.
+     To collect real RSVPs, paste a Formspree (or similar) URL below
+     in the <script> config: const RSVP_ENDPOINT = "https://...";
+     =========================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --black:#000;
+    --white:#f2f1ea;
+    --gray:#9b9a92;
+    --dim:#5f5e57;
+    --hair:rgba(242,241,234,0.22);
+    --display:'Anton', 'Oswald', sans-serif;
+    --body:'Jost', system-ui, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; color:var(--white);
+    font-family:var(--body); font-weight:300; font-size:1.18rem; line-height:1.7;
+    overflow-x:hidden; -webkit-font-smoothing:antialiased;
+    background-color:#000;
+    background-image:
+      radial-gradient(1px 1px at 30px 40px, rgba(242,241,234,.5) 1px, transparent 0),
+      radial-gradient(1px 1px at 90px 110px, rgba(242,241,234,.35) 1px, transparent 0),
+      radial-gradient(1.5px 1.5px at 160px 70px, rgba(242,241,234,.45) 1px, transparent 0);
+    background-size:200px 200px, 260px 260px, 320px 320px;
+    background-attachment:fixed;
+  }
+  /* vignette */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(130% 100% at 50% 35%, transparent 38%, rgba(0,0,0,.92) 100%);
+  }
+  /* CRT scanlines + faint flicker */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:9998; pointer-events:none;
+    background:repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,.22) 2px 4px);
+    opacity:.55; animation:flick 6s steps(60) infinite;
+  }
+  @keyframes flick{ 0%,100%{opacity:.5;} 48%{opacity:.6;} 50%{opacity:.42;} 52%{opacity:.58;} }
+
+  ::selection{ background:var(--white); color:var(--black); }
+  a{ color:var(--white); text-decoration:none; }
+
+  .wrap{ width:min(860px, 92vw); margin-inline:auto; text-align:center; position:relative; z-index:2; }
+
+  /* ---------- type ---------- */
+  .kicker{
+    font-family:var(--body); font-weight:400; text-transform:uppercase;
+    letter-spacing:.42em; font-size:.78rem; color:var(--gray); margin:0 0 1.3rem;
+  }
+  h1{ font-family:var(--display); font-weight:400; text-transform:uppercase; line-height:.92; letter-spacing:.02em; margin:0; }
+  h2{ font-family:var(--display); font-weight:400; text-transform:uppercase; letter-spacing:.03em; line-height:1; margin:0 0 1.6rem; font-size:clamp(2rem,5.6vw,3.4rem); }
+  .prose{ max-width:56ch; margin:0 auto; color:var(--gray); font-size:1.22rem; }
+  .prose.left{ text-align:left; }
+  .prose em{ color:var(--white); font-style:italic; }
+  .rule{ width:60px; height:2px; background:var(--white); margin:1.5rem auto; }
+
+  section{ padding:6rem 0; position:relative; }
+  .divider{ display:flex; align-items:center; justify-content:center; gap:1rem; padding:2.6rem 0; color:var(--dim); }
+  .divider span{ width:54px; height:1px; background:var(--hair); }
+  .divider .o{ font-size:.7rem; letter-spacing:.3em; text-transform:uppercase; }
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:relative; z-index:3; display:flex; justify-content:center; gap:1.2em;
+    padding:1.5rem; font-family:var(--body); font-weight:400; text-transform:uppercase;
+    letter-spacing:.34em; font-size:.66rem; color:var(--dim);
+  }
+
+  /* ---------- buttons ---------- */
+  .actions{ margin-top:2.6rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--body); font-weight:500; text-transform:uppercase; letter-spacing:.2em;
+    font-size:.82rem; cursor:pointer; padding:.85rem 2rem;
+    border:1px solid var(--white); background:var(--white); color:var(--black);
+    transition:background .25s ease, color .25s ease, transform .18s ease;
+  }
+  .btn:hover{ background:transparent; color:var(--white); transform:translateY(-2px); }
+  .btn.ghost{ background:transparent; color:var(--white); }
+  .btn.ghost:hover{ background:var(--white); color:var(--black); }
+
+  /* ---------- hero ---------- */
+  .hero{ min-height:98svh; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+  .spiral{
+    position:absolute; top:46%; left:50%; transform:translate(-50%,-50%);
+    width:min(125vh,125vw); height:min(125vh,125vw); z-index:1; opacity:.32; pointer-events:none;
+    animation:spin 60s linear infinite;
+  }
+  .spiral path{ fill:none; stroke:var(--white); stroke-width:1.1; }
+  @keyframes spin{ to{ transform:translate(-50%,-50%) rotate(-360deg); } }
+
+  .hero h1{ font-size:clamp(3rem, 13vw, 9rem); }
+  .hero h1 .sm{ display:block; font-size:.32em; letter-spacing:.5em; margin-bottom:.3em; color:var(--gray); }
+  .hero .lede{ max-width:50ch; margin:2.2rem auto 0; color:var(--gray); font-size:1.24rem; }
+  .hero .lede em{ color:var(--white); font-style:italic; }
+  .scrollcue{ margin-top:2.8rem; font-family:var(--body); text-transform:uppercase; letter-spacing:.3em; font-size:.7rem; color:var(--dim); animation:bob 3s ease-in-out infinite; }
+  @keyframes bob{ 50%{ transform:translateY(6px); opacity:.5; } }
+
+  /* ---------- rules ---------- */
+  .rules{ max-width:640px; margin:1rem auto 0; }
+  .rules .item{ padding:2.1rem 0; border-bottom:1px solid var(--hair); text-align:center; }
+  .rules .item:first-child{ border-top:1px solid var(--hair); }
+  .rules .rn{ font-family:var(--display); font-size:2rem; color:var(--white); line-height:1; display:block; margin-bottom:.5rem; }
+  .rules h3{ font-family:var(--body); font-weight:500; text-transform:uppercase; letter-spacing:.16em; font-size:1rem; color:var(--white); margin:0 0 .5rem; }
+  .rules p{ margin:0 auto; max-width:46ch; color:var(--gray); font-size:1.1rem; }
+  .closing{ text-align:center; margin-top:2.4rem; font-style:italic; color:var(--white); font-size:1.3rem; }
+
+  /* ---------- particulars ---------- */
+  .ticket{ max-width:520px; margin:2.4rem auto 0; }
+  .ticket .row{ padding:1.7rem 0; }
+  .ticket .row + .row{ border-top:1px solid var(--hair); }
+  .ticket .k{ font-family:var(--body); font-weight:400; text-transform:uppercase; letter-spacing:.3em; font-size:.74rem; color:var(--gray); }
+  .ticket .v{ font-family:var(--display); text-transform:uppercase; font-size:clamp(1.4rem,4vw,2rem); margin-top:.5rem; }
+  .ticket .note{ display:block; font-style:italic; font-size:1rem; color:var(--dim); margin-top:.5rem; }
+
+  /* ---------- rsvp (TV screen) ---------- */
+  .screen{
+    max-width:600px; margin:2.4rem auto 0; padding:clamp(1.8rem,5vw,3rem);
+    border:2px solid var(--white); border-radius:14px;
+    background:rgba(242,241,234,.03);
+    box-shadow:0 0 50px rgba(242,241,234,.06), inset 0 0 60px rgba(0,0,0,.6);
+  }
+  form{ text-align:left; }
+  .field{ margin-bottom:1.7rem; }
+  .field label{ display:block; font-family:var(--body); font-weight:500; text-transform:uppercase; letter-spacing:.16em; font-size:.74rem; color:var(--gray); margin-bottom:.45rem; }
+  .field input, .field select, .field textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--hair);
+    color:var(--white); font-family:var(--body); font-weight:300; font-size:1.12rem; padding:.5rem .1rem;
+    transition:border-color .25s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--dim); }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--white); }
+  .field select{ cursor:pointer; }
+  .field select option{ background:#0a0a0a; color:var(--white); }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+  @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
+  .form-actions{ text-align:center; margin-top:1rem; }
+
+  .reserved{ display:none; text-align:center; padding:1rem 0; }
+  .reserved.show{ display:block; animation:fade 1s ease both; }
+  .reserved .seal{ font-family:var(--display); text-transform:uppercase; font-size:clamp(1.6rem,5vw,2.4rem); color:var(--white); }
+  .reserved p{ font-style:italic; color:var(--gray); margin-top:1rem; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none; } }
+
+  /* ---------- footer ---------- */
+  footer{ text-align:center; padding:3rem 0 4.5rem; position:relative; z-index:2; }
+  footer .name{ font-family:var(--display); text-transform:uppercase; font-size:1.6rem; }
+  footer .tag{ font-family:var(--body); text-transform:uppercase; letter-spacing:.28em; font-size:.72rem; color:var(--dim); margin-top:1rem; max-width:46ch; margin-inline:auto; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <span>Submitted for Your Approval</span><span>&middot;</span><span>Trust No One</span>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <svg class="spiral" viewBox="0 0 400 400" aria-hidden="true"><path/></svg>
+    <div class="wrap">
+      <p class="kicker reveal">There is a fifth dimension&hellip;</p>
+      <h1 class="reveal"><span class="sm">Enter</span>The Conspiracy Zone</h1>
+      <p class="lede reveal">
+        Submitted for your approval: a gathering of ordinary people, each handed a single theory and asked to
+        make it <em>true.</em> There is no reward for honesty here — only for persuasion. The most convincing mind
+        wins a genuinely valuable prize. You are about to cross over.
+      </p>
+      <div class="actions reveal">
+        <a class="btn" href="#rsvp">Enter</a>
+        <a class="btn ghost" href="#rules">The Rules</a>
+      </div>
+      <div class="scrollcue reveal">Cross Over &#9662;</div>
+    </div>
+  </header>
+
+  <div class="divider"><span></span><span class="o">&middot; &middot; &middot;</span><span></span></div>
+
+  <!-- ===================== PREMISE ===================== -->
+  <section id="premise">
+    <div class="wrap">
+      <p class="kicker reveal">Picture, If You Will</p>
+      <h2 class="reveal">A Game of Belief</h2>
+      <div class="rule reveal"></div>
+      <div class="prose left reveal">
+        <p>
+          A quiet room. A handful of guests. Each arrives carrying a single theory — assigned in advance —
+          that they alone must defend before the company.
+        </p>
+        <p>
+          You may believe it. You may find it <em>impossible.</em> It will not matter. In this place there is
+          but one currency, and it is conviction. Submitted for your approval: the most persuasive guest
+          shall be crowned, and rewarded.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="o">&middot; &middot; &middot;</span><span></span></div>
+
+  <!-- ===================== RULES ===================== -->
+  <!-- ===== EDIT THE TIME LIMIT IN RULE III BELOW ===== -->
+  <section id="rules">
+    <div class="wrap">
+      <p class="kicker reveal">The Rules of the Game</p>
+      <h2 class="reveal">How the Evening Unfolds</h2>
+
+      <div class="rules">
+        <div class="item reveal">
+          <span class="rn">I.</span>
+          <h3>Your Theory Arrives Early</h3>
+          <p>Your assignment is delivered well in advance. Study it. Live with it. Come prepared — this is no place for improvisation.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">II.</span>
+          <h3>Any Medium You Can Master</h3>
+          <p>Slides, film, sound, props, evidence of uncertain origin — present however you please. Craft will be noticed.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">III.</span>
+          <h3>Mind the Clock</h3>
+          <p>Each presentation is permitted exactly <strong>&#10216; X &#10217; minutes</strong>. Time, in this dimension, is not your friend.</p>
+        </div>
+        <div class="item reveal">
+          <span class="rn">IV.</span>
+          <h3>The Company Decides</h3>
+          <p>When all have spoken, a vote is taken. The most convincing mind wins the prize. The rest are left to wonder.</p>
+        </div>
+      </div>
+
+      <p class="closing reveal">Come prepared. In the Zone, the believable always wins.</p>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="o">&middot; &middot; &middot;</span><span></span></div>
+
+  <!-- ===================== PARTICULARS ===================== -->
+  <!-- ===== EDIT THE EVENT DETAILS IN THE THREE ROWS BELOW ===== -->
+  <section id="particulars">
+    <div class="wrap">
+      <p class="kicker reveal">The Particulars</p>
+      <h2 class="reveal">The When &amp; Where</h2>
+      <div class="rule reveal"></div>
+
+      <div class="ticket reveal">
+        <div class="row">
+          <div class="k">The Date</div>
+          <div class="v">&#10216; Date — to be revealed &#10217;</div>
+          <span class="note">The hour disclosed upon your reply.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Place</div>
+          <div class="v">&#10216; Location &#10217;</div>
+          <span class="note">Coordinates shared only with confirmed guests.</span>
+        </div>
+        <div class="row">
+          <div class="k">The Dress</div>
+          <div class="v">Sharp, with a Touch of the Strange</div>
+          <span class="note">Come as someone not entirely of this world.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="o">&middot; &middot; &middot;</span><span></span></div>
+
+  <!-- ===================== RSVP ===================== -->
+  <section id="rsvp">
+    <div class="wrap">
+      <p class="kicker reveal">Kindly Respond</p>
+      <h2 class="reveal">Will You Cross Over?</h2>
+      <div class="rule reveal"></div>
+      <p class="prose reveal">A reply is requested. Reality is optional.</p>
+
+      <div class="screen reveal">
+        <form id="rsvpForm" novalidate>
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="attending">Your Reply</label>
+              <select id="attending" name="attending" required>
+                <option value="" disabled selected>Select&hellip;</option>
+                <option value="yes">I shall cross over.</option>
+                <option value="maybe">I am between dimensions.</option>
+                <option value="no">Regretfully, no.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="guests">In Your Party</label>
+              <input id="guests" name="guests" type="number" min="1" max="4" value="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="diet">Dietary Notes</label>
+            <input id="diet" name="diet" type="text" placeholder="Allergies, preferences, or none at all" />
+          </div>
+          <div class="field">
+            <label for="msg">A Word to the Host (Optional)</label>
+            <textarea id="msg" name="msg" placeholder="Should there be anything we ought to know&hellip;"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="submit">Transmit Reply</button>
+          </div>
+        </form>
+
+        <div class="reserved" id="reserved">
+          <div class="seal">Your Seat Is Reserved</div>
+          <p>Await further word. Tell no one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span><span class="o">&middot; &middot; &middot;</span><span></span></div>
+
+  <footer>
+    <div class="name">&#10216; Event Name &#10217;</div>
+    <div class="tag">You are traveling through another dimension &middot; Trust no one</div>
+  </footer>
+
+<script>
+  // ---- CONFIG: paste a Formspree (or similar) URL to collect real RSVPs ----
+  const RSVP_ENDPOINT = ""; // e.g. "https://formspree.io/f/xxxxxxx"
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---- generate the spiral path ----
+  (function(){
+    const path = document.querySelector(".spiral path");
+    if(!path) return;
+    const cx=200, cy=200, turns=6, pts=720, spacing=15.5;
+    let d="M";
+    for(let i=0;i<=pts;i++){
+      const t=(i/pts)*turns*2*Math.PI;
+      const r=spacing*(t/(2*Math.PI));
+      const x=cx+r*Math.cos(t), y=cy+r*Math.sin(t);
+      d += (i===0 ? " "+x.toFixed(1)+" "+y.toFixed(1) : " L "+x.toFixed(1)+" "+y.toFixed(1));
+    }
+    path.setAttribute("d", d);
+  })();
+
+  // ---- staggered scroll reveal ----
+  (function(){
+    const items = document.querySelectorAll(".reveal");
+    if (reduceMotion){ items.forEach(i => i.classList.add("in")); return; }
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains("reveal"));
+          const idx = Math.max(0, sibs.indexOf(e.target));
+          e.target.style.transitionDelay = (idx * 110) + "ms";
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14 });
+    items.forEach(i => io.observe(i));
+  })();
+
+  // ---- RSVP submit ----
+  (function(){
+    const form = document.getElementById("rsvpForm");
+    const reserved = document.getElementById("reserved");
+    form.addEventListener("submit", async function(e){
+      e.preventDefault();
+      const name = document.getElementById("name");
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--white)"; return; }
+
+      const done = function(){
+        form.style.display = "none";
+        reserved.classList.add("show");
+        reserved.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      };
+
+      if (RSVP_ENDPOINT){
+        try{
+          const res = await fetch(RSVP_ENDPOINT, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: new FormData(form)
+          });
+          res.ok ? done() : alert("Your reply could not be sent. Please try again or contact the host directly.");
+        }catch(err){
+          alert("Your reply could not be sent. Check your connection and try again.");
+        }
+      } else {
+        done(); // demo mode — no endpoint configured
+      }
+    });
+  })();
+</script>
+</body>
+</html>
