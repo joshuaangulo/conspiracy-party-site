@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>You Have Been Selected — A Most Curious Affair</title>
-<meta name="description" content="A most curious affair. You are assigned a single theory in advance and invited to persuade the room. The most convincing sleuth wins a genuinely valuable prize." />
+<title>You Have Been Selected — A Most Curious Whodunnit</title>
+<meta name="description" content="A most curious whodunnit. You are assigned a single theory in advance and invited to persuade the room. The most convincing guest wins a genuinely valuable prize." />
 
 <!-- ===========================================================
      RSVP ENDPOINT — leave empty for the built-in demo confirmation.
@@ -14,22 +14,23 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
 
 <style>
   :root{
-    --brown:#2a211a;
-    --brown-2:#221a14;
-    --brown-deep:#150e09;
-    --gold:#c8924f;
-    --gold-bright:#e2b274;
-    --gold-deep:#9c6e35;
-    --cream:#ece0c8;
-    --cream-dim:#b4a587;
-    --cream-faint:#7e735c;
-    --hair:rgba(200,146,79,0.30);
-    --hair-soft:rgba(200,146,79,0.16);
-    --display:'Abril Fatface', Georgia, serif;
+    --bg:#2a1613;
+    --bg-2:#21110e;
+    --bg-deep:#160a08;
+    --yellow:#e8c24a;
+    --yellow-bright:#f4d676;
+    --red:#a82c1d;
+    --red-deep:#7a1f15;
+    --cream:#efe3c9;
+    --cream-dim:#bcab8c;
+    --cream-faint:#897a5c;
+    --hair:rgba(232,194,74,0.28);
+    --hair-soft:rgba(232,194,74,0.15);
+    --display:'Yeseva One', Georgia, serif;
     --body:'EB Garamond', Georgia, 'Times New Roman', serif;
   }
 
@@ -40,10 +41,9 @@
     font-family:var(--body); font-size:1.24rem; line-height:1.72;
     overflow-x:hidden; -webkit-font-smoothing:antialiased;
     background:
-      radial-gradient(125% 95% at 50% 18%, #352a20 0%, var(--brown) 45%, var(--brown-deep) 100%);
+      radial-gradient(125% 95% at 50% 16%, #3c211a 0%, var(--bg) 44%, var(--bg-deep) 100%);
     background-attachment:fixed;
   }
-  /* soft grain */
   body::after{
     content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
     opacity:.05; mix-blend-mode:soft-light;
@@ -51,30 +51,29 @@
   }
   body::before{
     content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(130% 100% at 50% 30%, transparent 42%, rgba(0,0,0,.6) 100%);
+    background:radial-gradient(130% 100% at 50% 28%, transparent 42%, rgba(0,0,0,.62) 100%);
   }
 
-  ::selection{ background:var(--gold); color:var(--brown-deep); }
-  a{ color:var(--gold-bright); text-decoration:none; }
+  ::selection{ background:var(--yellow); color:var(--bg-deep); }
+  a{ color:var(--yellow-bright); text-decoration:none; }
 
   .wrap{ width:min(840px, 92vw); margin-inline:auto; text-align:center; position:relative; z-index:2; }
-
-  .emblem{ width:54px; height:54px; color:var(--gold); display:inline-block; }
 
   /* ---------- type ---------- */
   .kicker{
     font-family:var(--body); font-variant:small-caps; font-weight:600;
-    letter-spacing:.32em; font-size:.84rem; color:var(--gold); margin:0 0 1.2rem;
+    letter-spacing:.32em; font-size:.84rem; color:var(--red); margin:0 0 1.2rem;
   }
-  h1{ font-family:var(--display); font-weight:400; line-height:1.04; margin:0; color:var(--gold-bright); }
-  h2{ font-family:var(--display); font-weight:400; font-size:clamp(2.1rem,5.4vw,3.4rem); line-height:1.06; margin:0 0 1.4rem; color:var(--gold-bright); }
+  .kicker.gold{ color:var(--yellow); }
+  h1{ font-family:var(--display); font-weight:400; line-height:1.04; margin:0; color:var(--yellow); }
+  h2{ font-family:var(--display); font-weight:400; font-size:clamp(2rem,5.2vw,3.2rem); line-height:1.1; margin:0 0 1.4rem; color:var(--yellow); }
   .prose{ max-width:56ch; margin:0 auto; color:var(--cream-dim); font-size:1.26rem; }
   .prose.left{ text-align:left; }
   .prose em{ color:var(--cream); font-style:italic; }
-  .rule{ width:56px; height:2px; background:var(--gold); margin:1.4rem auto; opacity:.85; }
+  .rule{ width:56px; height:2px; background:var(--yellow); margin:1.4rem auto; opacity:.85; }
 
   section{ padding:6rem 0; position:relative; }
-  .divider{ display:flex; align-items:center; justify-content:center; gap:1.2rem; padding:2.8rem 0; color:var(--gold); }
+  .divider{ display:flex; align-items:center; justify-content:center; gap:1.2rem; padding:2.8rem 0; color:var(--yellow); }
   .divider span{ width:60px; height:1px; background:var(--hair); }
   .divider .m{ font-size:.85rem; }
 
@@ -84,30 +83,29 @@
     padding:1.5rem; font-family:var(--body); font-variant:small-caps;
     letter-spacing:.3em; font-size:.74rem; color:var(--cream-faint);
   }
-  .topbar .d{ color:var(--gold); }
+  .topbar .d{ color:var(--yellow); }
 
   /* ---------- buttons ---------- */
   .actions{ margin-top:2.6rem; display:flex; gap:1.1rem; justify-content:center; flex-wrap:wrap; }
   .btn{
     font-family:var(--body); font-variant:small-caps; font-weight:600;
     letter-spacing:.14em; font-size:1rem; cursor:pointer;
-    padding:.82rem 2rem; border:1px solid var(--gold);
-    background:var(--gold); color:var(--brown-deep);
+    padding:.82rem 2rem; border:1px solid var(--yellow);
+    background:var(--yellow); color:var(--bg-deep);
     transition:transform .18s ease, background .25s ease, color .25s ease;
   }
-  .btn:hover{ transform:translateY(-2px); background:var(--gold-bright); border-color:var(--gold-bright); }
-  .btn.ghost{ background:transparent; color:var(--gold-bright); }
-  .btn.ghost:hover{ background:rgba(200,146,79,.12); color:var(--gold-bright); }
+  .btn:hover{ transform:translateY(-2px); background:var(--yellow-bright); border-color:var(--yellow-bright); }
+  .btn.ghost{ background:transparent; color:var(--cream); border-color:var(--hair); }
+  .btn.ghost:hover{ background:rgba(232,194,74,.1); color:var(--yellow-bright); border-color:var(--yellow); }
 
   /* ---------- hero ---------- */
   .hero{ min-height:96svh; display:flex; align-items:center; justify-content:center; position:relative; }
   .hero::before{
     content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-    background:radial-gradient(42% 36% at 50% 42%, rgba(200,146,79,.14), transparent 72%);
+    background:radial-gradient(44% 38% at 50% 42%, rgba(168,44,29,.22), transparent 72%);
   }
-  .hero .emblem{ margin-bottom:1.4rem; }
-  .hero h1{ font-size:clamp(2.8rem, 9vw, 6.4rem); }
-  .hero .sub{ font-family:var(--body); font-style:italic; font-size:1.4rem; color:var(--cream); margin:1.3rem auto 0; }
+  .hero h1{ font-size:clamp(2.9rem, 10vw, 7rem); text-shadow:0 0 50px rgba(0,0,0,.4); }
+  .hero .sub{ font-family:var(--body); font-style:italic; font-size:1.42rem; color:var(--cream); margin:1.3rem auto 0; }
   .hero .lede{ max-width:50ch; margin:1.5rem auto 0; color:var(--cream-dim); font-size:1.2rem; }
   .scrollcue{ margin-top:2.8rem; font-family:var(--body); font-variant:small-caps; letter-spacing:.3em; font-size:.74rem; color:var(--cream-faint); animation:bob 3s ease-in-out infinite; }
   @keyframes bob{ 50%{ transform:translateY(6px); opacity:.6; } }
@@ -116,7 +114,7 @@
   .rules{ max-width:640px; margin:1rem auto 0; }
   .rules .item{ padding:2.1rem 0; border-bottom:1px solid var(--hair-soft); text-align:center; }
   .rules .item:first-child{ border-top:1px solid var(--hair-soft); }
-  .rules .rn{ font-family:var(--display); font-size:2.4rem; color:var(--gold); line-height:1; display:block; margin-bottom:.4rem; }
+  .rules .rn{ font-family:var(--display); font-size:2.2rem; color:var(--yellow); line-height:1; display:block; margin-bottom:.5rem; }
   .rules h3{ font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.1em; font-size:1.14rem; color:var(--cream); margin:0 0 .5rem; }
   .rules p{ margin:0 auto; max-width:46ch; color:var(--cream-dim); font-size:1.12rem; }
   .closing{ text-align:center; margin-top:2.4rem; font-style:italic; color:var(--cream); font-size:1.34rem; }
@@ -125,25 +123,25 @@
   .ticket{ max-width:520px; margin:2.4rem auto 0; }
   .ticket .row{ padding:1.7rem 0; }
   .ticket .row + .row{ border-top:1px solid var(--hair-soft); }
-  .ticket .k{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.78rem; color:var(--gold); }
-  .ticket .v{ font-family:var(--display); font-size:clamp(1.4rem,3.6vw,2rem); color:var(--cream); margin-top:.5rem; line-height:1.15; }
+  .ticket .k{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.78rem; color:var(--red); }
+  .ticket .v{ font-family:var(--display); font-size:clamp(1.3rem,3.4vw,1.85rem); color:var(--cream); margin-top:.5rem; line-height:1.2; }
   .ticket .note{ display:block; font-style:italic; font-size:1rem; color:var(--cream-faint); margin-top:.5rem; }
 
   /* ---------- rsvp ---------- */
-  .frame{ max-width:600px; margin:2.4rem auto 0; position:relative; border:1px solid var(--hair); padding:clamp(1.8rem,5vw,3rem); background:rgba(21,14,9,.4); }
+  .frame{ max-width:600px; margin:2.4rem auto 0; position:relative; border:1px solid var(--hair); padding:clamp(1.8rem,5vw,3rem); background:rgba(22,10,8,.4); }
   .frame::before{ content:""; position:absolute; inset:6px; border:1px solid var(--hair-soft); pointer-events:none; }
   form{ position:relative; z-index:2; text-align:left; }
   .field{ margin-bottom:1.7rem; }
-  .field label{ display:block; font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.14em; font-size:.84rem; color:var(--gold); margin-bottom:.45rem; }
+  .field label{ display:block; font-family:var(--body); font-variant:small-caps; font-weight:600; letter-spacing:.14em; font-size:.84rem; color:var(--yellow); margin-bottom:.45rem; }
   .field input, .field select, .field textarea{
     width:100%; background:transparent; border:none; border-bottom:1px solid var(--hair-soft);
     color:var(--cream); font-family:var(--body); font-size:1.2rem; padding:.5rem .1rem;
     transition:border-color .25s ease;
   }
   .field input::placeholder, .field textarea::placeholder{ color:var(--cream-faint); font-style:italic; }
-  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--gold); }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--yellow); }
   .field select{ cursor:pointer; }
-  .field select option{ background:var(--brown-deep); color:var(--cream); }
+  .field select option{ background:var(--bg-deep); color:var(--cream); }
   .field textarea{ resize:vertical; min-height:70px; }
   .two{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
   @media (max-width:520px){ .two{ grid-template-columns:1fr; } }
@@ -151,14 +149,13 @@
 
   .reserved{ display:none; text-align:center; padding:1rem 0; }
   .reserved.show{ display:block; animation:fade 1s ease both; }
-  .reserved .seal{ font-family:var(--display); font-size:clamp(1.8rem,5.5vw,2.8rem); color:var(--gold-bright); }
+  .reserved .seal{ font-family:var(--display); font-size:clamp(1.7rem,5.2vw,2.6rem); color:var(--yellow); }
   .reserved p{ font-style:italic; color:var(--cream-dim); margin-top:1rem; }
   @keyframes fade{ from{ opacity:0; transform:translateY(12px);} to{ opacity:1; transform:none; } }
 
   /* ---------- footer ---------- */
   footer{ text-align:center; padding:3rem 0 4.5rem; position:relative; z-index:2; }
-  footer .emblem{ margin-bottom:1rem; width:40px; height:40px; }
-  footer .name{ font-family:var(--display); font-size:1.8rem; color:var(--gold-bright); }
+  footer .name{ font-family:var(--display); font-size:1.9rem; color:var(--yellow); }
   footer .tag{ font-family:var(--body); font-variant:small-caps; letter-spacing:.28em; font-size:.74rem; color:var(--cream-faint); margin-top:.8rem; }
 
   /* ---------- reveal ---------- */
@@ -179,17 +176,12 @@
   <!-- ===================== HERO ===================== -->
   <header class="hero">
     <div class="wrap">
-      <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
-        <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
-          <circle cx="42" cy="42" r="25"/><line x1="60" y1="60" x2="84" y2="84"/>
-        </g>
-      </svg>
-      <p class="kicker reveal">A Most Curious Affair</p>
+      <p class="kicker gold reveal">A Most Curious Whodunnit</p>
       <h1 class="reveal">You Have Been Selected</h1>
       <p class="sub reveal">The game, dear guest, is afoot.</p>
       <p class="lede reveal">
         You will be entrusted, in advance, with a single theory — and one charge: persuade the room it is true.
-        By any means; with all the cunning you can summon. The most convincing sleuth wins a genuinely valuable
+        By any means; with all the cunning you can summon. The most convincing guest wins a genuinely valuable
         prize. Believe it, or not.
       </p>
       <div class="actions reveal">
@@ -342,11 +334,6 @@
   <div class="divider"><span></span><span class="m">&#9670;</span><span></span></div>
 
   <footer>
-    <svg class="emblem" viewBox="0 0 100 100" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
-        <circle cx="42" cy="42" r="25"/><line x1="60" y1="60" x2="84" y2="84"/>
-      </g>
-    </svg>
     <div class="name">&#10216; Event Name &#10217;</div>
     <div class="tag">By Invitation Only &nbsp;&#9670;&nbsp; Trust No One</div>
   </footer>
@@ -382,7 +369,7 @@
     form.addEventListener("submit", async function(e){
       e.preventDefault();
       const name = document.getElementById("name");
-      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--gold)"; return; }
+      if (!name.value.trim()){ name.focus(); name.style.borderColor = "var(--yellow)"; return; }
 
       const done = function(){
         form.style.display = "none";

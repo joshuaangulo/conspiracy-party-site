@@ -14,7 +14,7 @@ v1-dossier/index.html       ← Version 1 — "Declassified Dossier" (grungy, re
 v2-twilight-zone/index.html ← Version 2 — "Twilight Zone" (B&W retro-TV, spiral, scanlines)
 v3-red-velvet/index.html    ← Version 3 — "Red Velvet & Gold" (opulent gala, velvet crimson + gold)
 v4-wes-anderson/index.html  ← Version 4 — "Wes Anderson" (symmetrical, color-blocked, Futura)
-v5-knives-out/index.html    ← Version 5 — "Sleuthed" (vintage detective, Abril Fatface gold-on-espresso)
+v5-knives-out/index.html    ← Version 5 — "Knives Out" (warm manor palette, yellow serif title)
 ```
 
 ## View it locally
@@ -45,7 +45,7 @@ const RSVP_ENDPOINT = "https://formspree.io/f/xxxxxxx";
 - **v2 — Twilight Zone:** Anton (stark condensed caps) + Jost; black-and-white retro-TV — a spinning generated spiral, starfield, CRT scanlines + flicker, vignette; Rod-Serling-cadence copy; RSVP framed like a TV screen. (Replaced the earlier "Glass Onion" v2.)
 - **v3 — Red Velvet & Gold:** Playfair Display (gold-gradient serif) + EB Garamond; deep velvet-crimson background (drape + grain), metallic gold, rotating knife-wheel sunburst, gilded double-line frames, gold-diamond (◆) dividers. Inspired by the Knives Out Collection poster.
 - **v4 — Wes Anderson:** Jost (Futura-style geometric caps) + Lora; symmetrical, color-blocked panels in muted Knives-Out pastels (hunter green, oxblood, mustard, dusty rose, cream); chapter cards (I–IV), thin double-line frames, crossed-knives crest, deadpan-whimsical copy.
-- **v5 — Sleuthed (actual Knives Out / Agatha Christie):** Abril Fatface (high-contrast Victorian fat-face, modeled on the "Sleuthed AF" reference) + EB Garamond; gold/amber on dark espresso brown, magnifying-glass crest, gold-diamond dividers, vintage-detective copy.
+- **v5 — Knives Out:** Yeseva One (warm display serif, closest free stand-in for the title's Windsor-style face) + EB Garamond; warm mahogany manor palette with a golden-yellow serif title and oxblood accents, gold-diamond dividers, whodunnit copy. Modeled on the Knives Out movie poster. (Earlier "Sleuthed"/Abril Fatface version replaced.)
 - All: responsive, `prefers-reduced-motion` fallback, demo-mode RSVP.
 
 ## History
